@@ -38,7 +38,7 @@
     <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <script>
-    // var session = new QiSession();
+     var session = new QiSession();
 
     /** TabletからPepper */
     // function btn1() {
@@ -59,9 +59,8 @@
     //   });
     // }
     
-    $(function(){
+    
     var socket = io.connect('https://jasia.au-syd.mybluemix.net:/test');
-    var socket2 = io.connect('http://133.130.57.86:5002/');
     
     var events = {
         japanese: 'Japanese',
@@ -104,18 +103,10 @@
         langEvent(data.data.lang);
     });
       
-    socket2.on('datasClient', function(data){
-        alert(data);
-    })
-    socket2.emit('datasServer', {data: 'test'});
-    
-        $('.test').hide();
-    });
-    
     </script>
     </head>
 
-  <body><div class="test">test</div>
+  <body>
       <div class="country">
         <img src="" class="img" alt="">
         <p class="message"></div>
