@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+  <html lang="ja">
+    <head>
+    <meta charset="UTF-8">
+    <title>Recognition</title>
+    <style>
+    </style>
+    
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="//cdn.jsdelivr.net/velocity/1.2.2/velocity.min.js"></script>
+    <script>
+            //recognition
+        window.SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
+        var recognition = new webkitSpeechRecognition();
+        recognition.lang = 'en';
+        recognition.maxAlternatives = 3;
+
+        recognition.continuous = false;
+        recognition.onresult = function(event) {
+            var result = event.results;
+
+            for (var i = 0; i < result[0].length; i++) {
+                res = result[0][i]['transcript'];
+                console.log(res);
+                $('body').prepend('<div>'+res+'</div>');
+
+
+                var breakFlag = false;
+                /*
+                for (var j = 0; j < kushami.length; j++) {
+                    if (res.indexOf(kushami[j]) > -1) {
+                        socket.emit('datasServer', {
+                            kushami: true,
+                            switch: false
+                        });
+                        breakFlag = true;
+                        console.log('kushami');
+                        break;
+                    }
+                }
+                */
+                if (breakFlag) {
+                    break;
+                }
+            }
+        }
+
+        var timer = setInterval(function() {
+            recognition.start();
+        }, 500);
+
+        function timerSet() {
+            timer = setInterval(function() {
+                recognition.start();
+            }, 500);
+        }
+
+        recognition.onstart = function(event) {
+            console.log('start');
+        }
+        recognition.onerror = function(event) {
+            recognition.start();
+        }
+
+        recognition.stopEnd = function() {
+            recognition.stop();
+            clearInterval(timer);
+        }
+
+        recognition.start();
+    </script>
+    
+    
+   <video id="myVideo" width="400" height="300" autoplay="1" ></video>
+ 
+   <script type="text/javascript">
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || window.navigator.mozGetUserMedia;
+    window.URL = window.URL || window.webkitURL;
+ 
+    var video = document.getElementById('myVideo');
+    var localStream = null;
+    navigator.getUserMedia({video: true, audio: false}, 
+     function(stream) { // for success case
+      console.log(stream);
+      video.src = window.URL.createObjectURL(stream);
+     },
+     function(err) { // for error case
+      console.log(err);
+     }
+    );
+   </script>
+    
+    
+    </head>
+
+  <body>
+      
+  </body>
+</html>
