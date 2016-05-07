@@ -1,21 +1,65 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
+  <html lang="ja">
+    <head>
     <meta charset="UTF-8">
-    <title>単純なJavaScript (ログ出力)</title>
+    <title>Test02 JS⇒Pepper</title>
+    <style>
+    @CHARSET "UTF-8";
+
+.btn {
+  border: 5px solid #DDD;
+  font-size: 10em;
+  border-radius: 20px;
+  text-align: center;
+  color: #FFF;
+  padding: 25px;
+  vertical-align: middle;
+  width: 100%;
+}
+
+.btn1 {
+  background: #ff0000;
+  margin-top: 75px;
+}
+
+.btn2 {
+  background: #ffff00;
+  margin-top: 75px;
+}
+
+.btn3 {
+  background: #0080ff;
+  margin-top: 75px;
+}    
+    </style>
+    <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
     <script>
-      // ログを出力するだけの関数
-      // <button>が押されると、onclick属性に指定されたスクリプトが実行され、この関数が
-      // 実行されます。
-      function sampleButtonClicked() {
-        console.log("sampleButtonClicked")
-      }
+    var session = new QiSession();
+
+    /** TabletからPepper */
+    function btn1() {
+      session.service("ALMemory").done(function (ALMemory) {
+        ALMemory.raiseEvent("test02/fromJs1", "あか");
+      });
+    }
+
+    function btn2() {
+      session.service("ALMemory").done(function (ALMemory) {
+        ALMemory.raiseEvent("test02/fromJs2", "き");
+      });
+    }
+
+    function btn3() {
+      session.service("ALMemory").done(function (ALMemory) {
+       ALMemory.raiseEvent("test02/fromJs3", "あお");
+      });
+    }
     </script>
-  </head>
+    </head>
+
   <body>
-    <div style="font-size: 6em">
-      単純なJavaScript (ログ出力)
-    </div>
-    <button style="font-size: 6em" type="button" onclick="sampleButtonClicked();">ログ出力</button>
+    <button class="btn btn1" onclick="btn1();">1</button>
+    <button class="btn btn2" onclick="btn2();">2</button>
+    <button class="btn btn3" onclick="btn3();">3</button>
   </body>
-</html> 
+</html>
