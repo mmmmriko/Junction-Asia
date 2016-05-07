@@ -39,19 +39,19 @@
     /** TabletからPepper */
     function btn1() {
       session.service("ALMemory").done(function (ALMemory) {
-        ALMemory.raiseEvent("test02/fromJs1", "あか");
+        ALMemory.raiseEvent("index/fromJs1", "あか");
       });
     }
 
     function btn2() {
       session.service("ALMemory").done(function (ALMemory) {
-        ALMemory.raiseEvent("test02/fromJs2", "き");
+        ALMemory.raiseEvent("index/fromJs2", "き");
       });
     }
 
     function btn3() {
       session.service("ALMemory").done(function (ALMemory) {
-       ALMemory.raiseEvent("test02/fromJs3", "あお");
+       ALMemory.raiseEvent("index/fromJs3", "あお");
       });
     }
     </script>
