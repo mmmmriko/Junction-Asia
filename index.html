@@ -58,6 +58,13 @@
     //    ALMemory.raiseEvent("index/fromJs3", "あお");
     //   });
     // }
+    
+    function langEvent(lang){
+            session.service("ALMemory").done(function (ALMemory) {
+            ALMemory.raiseEvent("index/" + events[lang], "");
+        });
+    }
+    
     var socket = io.connect('https://jasia.au-syd.mybluemix.net:/test');
     
     var events = {
@@ -91,20 +98,9 @@
     socket.on('my response', function(data) {
            $('.country .img').attr('src', 'img/' + data.data.lang + '.jpg');
         $('.country .message').text(langsMessage[data.data.lang ]);
-         session.service("ALMemory").done(function (ALMemory) {
-         ALMemory.raiseEvent("index/" + events[data.data.lang], "");
-        });
+        langEvent(data.data.lang);
     });
       
-    var intervalI = 0;
-    setInterval(function(){
-        $('.country .img').attr('src', 'img/' + langs[intervalI] + '.jpg');
-        $('.country .message').text(langsMessage[langs[intervalI]]);
-        console.log(intervalI);
-        intervalI = (langs.length-1<=intervalI)? 0: intervalI+1;
-       
-        
-    },100000);
     
     
     </script>
