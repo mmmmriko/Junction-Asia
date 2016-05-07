@@ -225,6 +225,16 @@
         cEle.height = vEle.videoHeight;
 
         cCtx.drawImage(vEle, 0, 0);  // canvasに関数実行時の動画のフレームを描画
+        
+        var data = {};
+	data['key'] = 'aoeuo4euoeu4aoeuu4oeu';
+	data['image'] = cEle.toDataURL();
+    console.log(data);
+
+	$.post('https://jasia-php.au-syd.mybluemix.net/', data, function(res){
+		console.log(res);
+        alert(res);
+    });
     }
    </script>
   </body>
