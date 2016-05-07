@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-  <html lang="ja">
-    <head>
+<html lang="ja">
+  <head>
     <meta charset="UTF-8">
-    <title>Test02 JS⇒Pepper</title>
+    <title>QiMessaging (メモリに出力)</title>
     <style>
     @CHARSET "UTF-8";
     *{
@@ -36,35 +36,19 @@
     </style>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <script>
-     var session = new QiSession();
-     
+      var session = new QiSession();
+      
+      function emit(lang) {
         session.service("ALMemory").done(function (ALMemory) {
-            alert('test');
-           ALMemory.raiseEvent("index/japanese", "test");
+          console.log("ALMemory取得成功");
+          ALMemory.raiseEvent("index/" + lang, "押したね");
         });
+      }
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
 
-    /** TabletからPepper */
-    // function btn1() {
-    //   session.service("ALMemory").done(function (ALMemory) {
-    //     ALMemory.raiseEvent("index/fromJs1", "あか");
-    //   });
-    // }
-
-    // function btn2() {
-    //   session.service("ALMemory").done(function (ALMemory) {
-    //     ALMemory.raiseEvent("index/fromJs2", "き");
-    //   });
-    // }
-
-    // function btn3() {
-    //   session.service("ALMemory").done(function (ALMemory) {
-    //    ALMemory.raiseEvent("index/fromJs3", "あお");
-    //   });
-    // }
-    
-    
+    <script>
     var socket = io.connect('https://jasia.au-syd.mybluemix.net:/test');
     
     var events = {
@@ -96,21 +80,16 @@
     
  
     socket.on('my response', function(data) {
-           $('.country .img').attr('src', 'img/' + data.data.lang + '.jpg');
+        $('.country .img').attr('src', 'img/' + data.data.lang + '.jpg');
         $('.country .message').text(langsMessage[data.data.lang ]);
-        session.service("ALMemory").done(function (ALMemory) {
-           ALMemory.raiseEvent("index/" + lang, "test");
-        });
+        emit(data.data.lang);
     });
-      
     </script>
-    </head>
-
+  </head>
   <body>
       <div class="country">
         <img src="" class="img" alt="">
         <p class="message"></div>
       </div>
-      
   </body>
 </html>
