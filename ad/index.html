@@ -2,15 +2,24 @@
   <html lang="ja">
     <head>
     <meta charset="UTF-8">
-    <title>Recognition</title>
+    <title>Ad</title>
     <style>
+        body{
+            font-size: 120px;
+        }
     </style>
     
   <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-    <script src="//cdn.jsdelivr.net/velocity/1.2.2/velocity.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
-    
-    <script defer>
+    <script src="https://cdn.jsdelivr.net/velocity/1.2.2/velocity.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+
+    </head>
+
+  <body>
+      <div class="ad"></div>
+      
+          
+    <script>
         var text = {
             japanese: '世界中から厳選素材を集め<br>HAND MADE IN JAPANにこだわった<br>日本のバッグブランドFREDRIKPACKERS。<br>テクニカルな要素を持ちながら、デイリーユースに馴染みやすいデザインが特長。<br>店舗限定で開催し、ご好評いただきました<br>モアバリエーションの第2弾を開催いたします。',
             chinese: '坚持MADE IN JAPAN手在<br>世界各地收集精心挑选的材料全部来自<br> 日本的包品牌FREDRIK PACKERS 。<br>同时维持的技术要素，<br>日常使用熟悉的设<br>计特点。 在有限的商店举行，<br>这将举行第二轮割草机变化流行。',
@@ -29,10 +38,8 @@
             console.log(data);
             $('.ad').html(text[data.data.lang]);
         });
+        
+        $('.ad').html(text['japanese']);
     </script>
-    </head>
-
-  <body>
-      <div class="ad"></div>
   </body>
 </html>
