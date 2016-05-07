@@ -38,7 +38,7 @@
     <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <script>
-     var session = new QiSession();
+    // var session = new QiSession();
 
     /** TabletからPepper */
     // function btn1() {
@@ -89,18 +89,14 @@
         finnish: 'Haluan ostaa matkamuistoja'
     }
     
-    
-    function langEvent(lang){
-            session.service("ALMemory").done(function (ALMemory) {
-            ALMemory.raiseEvent("index/" + events[lang], "test");
-        });
-    }
-    
-    
+ 
     socket.on('my response', function(data) {
            $('.country .img').attr('src', 'img/' + data.data.lang + '.jpg');
         $('.country .message').text(langsMessage[data.data.lang ]);
-        langEvent(data.data.lang);
+        session.service("ALMemory").done(function (ALMemory) {
+           // ALMemory.raiseEvent("index/" + lang, "test");
+           ALMemory.raiseEvent("index/fromJs1", "あか");
+        });
     });
       
     </script>
