@@ -59,11 +59,6 @@
     //   });
     // }
     
-    function langEvent(lang){
-            session.service("ALMemory").done(function (ALMemory) {
-            ALMemory.raiseEvent("index/" + events[lang], "");
-        });
-    }
     
     var socket = io.connect('https://jasia.au-syd.mybluemix.net:/test');
     
@@ -92,6 +87,13 @@
         spanish: 'Quiero comprar recuerdos',
         french: 'Je veux acheter des souvenirs',
         finnish: 'Haluan ostaa matkamuistoja'
+    }
+    
+    
+    function langEvent(lang){
+            session.service("ALMemory").done(function (ALMemory) {
+            ALMemory.raiseEvent("index/" + events[lang], "test");
+        });
     }
     
     
