@@ -28,38 +28,91 @@
         font-size: 120px;
         width: 100%;
         color: white;
+        background: rgba(0,0,0,0.3);
+        padding: 20px 10%;
+        box-sizing: border-box;
     }
 
     </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/libs/qimessaging/1.0/qimessaging.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <script>
-    var session = new QiSession();
+     var session = new QiSession();
 
     /** TabletからPepper */
-    function btn1() {
-      session.service("ALMemory").done(function (ALMemory) {
-        ALMemory.raiseEvent("index/fromJs1", "あか");
-      });
-    }
+    // function btn1() {
+    //   session.service("ALMemory").done(function (ALMemory) {
+    //     ALMemory.raiseEvent("index/fromJs1", "あか");
+    //   });
+    // }
 
-    function btn2() {
-      session.service("ALMemory").done(function (ALMemory) {
-        ALMemory.raiseEvent("index/fromJs2", "き");
-      });
-    }
+    // function btn2() {
+    //   session.service("ALMemory").done(function (ALMemory) {
+    //     ALMemory.raiseEvent("index/fromJs2", "き");
+    //   });
+    // }
 
-    function btn3() {
-      session.service("ALMemory").done(function (ALMemory) {
-       ALMemory.raiseEvent("index/fromJs3", "あお");
-      });
+    // function btn3() {
+    //   session.service("ALMemory").done(function (ALMemory) {
+    //    ALMemory.raiseEvent("index/fromJs3", "あお");
+    //   });
+    // }
+    var socket = io.connect('https://jasia.au-syd.mybluemix.net:/test');
+    
+    var events = {
+        japanese: 'Japanese',
+        english: 'English',
+        korean: 'Korean',
+        chinese: 'Chinese',
+        finnish: 'Finnish',
+        spanish: 'Spanish',
+        french: 'French'
+    };
+    
+    var langs = [
+        'japanese',
+        'english',
+        'chinese',
+        'finnish'
+    ];
+    
+    var langsMessage = {
+        japanese: 'ちょっと待ってな～',
+        english: 'I want to buy souvenirs',
+        korean: '기념품을 사고 싶은',
+        chinese: '我想买纪念品',
+        spanish: 'Quiero comprar recuerdos',
+        french: 'Je veux acheter des souvenirs',
+        finnish: 'Haluan ostaa matkamuistoja'
     }
+    
+    
+    socket.on('my response', function(data) {
+           $('.country .img').attr('src', 'img/' + data.data.lang + '.jpg');
+        $('.country .message').text(langsMessage[data.data.lang ]);
+    });
+      
+    var intervalI = 0;
+    setInterval(function(){
+        $('.country .img').attr('src', 'img/' + langs[intervalI] + '.jpg');
+        $('.country .message').text(langsMessage[langs[intervalI]]);
+        console.log(intervalI);
+        intervalI = (langs.length-1<=intervalI)? 0: intervalI+1;
+        session.service("ALMemory").done(function (ALMemory) {
+         ALMemory.raiseEvent("index/" + events[intervalI], "");
+        });
+        
+    },100000);
+    
+    
     </script>
     </head>
 
   <body>
       <div class="country">
-        <img src="img/china.png" class="img">
-        <p class="message">我想买纪念品</div>
+        <img src="" class="img" alt="">
+        <p class="message"></div>
       </div>
       
   </body>
