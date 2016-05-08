@@ -73,7 +73,7 @@
       
       function subscribe(label, callback) {
         session.service("ALMemory").done(function (ALMemory) {
-            alert('test');
+            alert(label);
           console.log("ALMemory取得成功");
           ALMemory.subscriber(label).done(function(subscriber) {
             subscriber.signal.connect(callback);
@@ -136,9 +136,10 @@
     });
     
     subscribe("index/getMood", function(res){
-        alert(res);
+       // alert(res);
     });
     subscribe("index/recommend", function(res){
+        alert('recommend');
         $('.country .message').stop().fadeOut(200);
         $('.buttons').stop().fadeIn(200);
         $('.buttons .button1').stop().fadeIn(200).text(button1[nowLang]);
