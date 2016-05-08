@@ -132,10 +132,6 @@
         $('.buttons').stop().fadeOut(200);
         $('.country .img').attr('src', 'img/' + nowLang + '.jpg');
         $('.country .message').stop().fadeIn(200).text(langsMessage[nowLang]);
-        $('.country .message').stop().fadeOut(200);
-        $('.buttons').stop().fadeIn(200);
-        $('.buttons .button1').text(button1[nowLang]);
-        $('.buttons .button2').text(button2[nowLang]);
         raise(nowLang);
     });
     
@@ -144,6 +140,7 @@
     });
     subscribe("index/recommend", function(res){
         $('.country .message').stop().fadeOut(200);
+        $('.buttons').stop().fadeIn(200);
         $('.buttons .button1').stop().fadeIn(200).text(button1[nowLang]);
         $('.buttons .button2').stop().fadeIn(200).text(button2[nowLang]);
     });
