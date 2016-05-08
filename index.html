@@ -32,6 +32,23 @@
         padding: 20px 10%;
         box-sizing: border-box;
     }
+    
+    .buttons{
+        position: absolute;
+        right: 3%;
+        top: 20%;
+    }
+    .button{
+            background: transparent;
+    border: white solid 7px;
+    padding: 30px;
+    width: 100%;
+    color: white;
+    font-size: 50px;
+    margin-bottom: 40px;
+    font-weight: bold;
+    box-shadow: 0px 5px 7px 4px rgba(0,0,0,0.3);
+    }
 
     </style>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -39,10 +56,20 @@
     <script>
       var session = new QiSession();
       
-      function emit(lang) {
+      function raise(lang) {
         session.service("ALMemory").done(function (ALMemory) {
           console.log("ALMemory取得成功");
           ALMemory.raiseEvent("index/" + lang, "押したね");
+        });
+      }
+      
+      function subscribe(label, callback) {
+        session.service("ALMemory").done(function (ALMemory) {
+            alert('test');
+          console.log("ALMemory取得成功");
+          ALMemory.subscriber(label).done(function(subscriber) {
+            subscriber.signal.connect(callback);
+          });
         });
       }
     </script>
@@ -76,13 +103,32 @@
         spanish: 'Quiero comprar recuerdos',
         french: 'Je veux acheter des souvenirs',
         finnish: 'Haluan ostaa matkamuistoja'
-    }
+    }   
     
+    var button1 = {
+        japanese: 'ちょっと待ってな～',
+        english: 'Wi-fi around',
+        chinese: 'Wi-fi 周围附近',
+        finnish: 'wifi ympäri'
+    }  
+    
+    var button2 = {
+        japanese: 'ちょっと待ってな～',
+        english: 'Restaurants',
+        chinese: '餐厅',
+        finnish: 'ravintolat'
+    }
  
     socket.on('my response', function(data) {
         $('.country .img').attr('src', 'img/' + data.data.lang + '.jpg');
-        $('.country .message').text(langsMessage[data.data.lang ]);
-        emit(data.data.lang);
+        $('.country .message').text(langsMessage[data.data.lang]);
+        $('.buttons .button1').text(button1[data.data.lang]);
+        $('.buttons .button2').text(button2[data.data.lang]);
+        raise(data.data.lang);
+    });
+    
+    subscribe("index/getMood", function(res){
+        alert(JSON.stringify(res));
     });
     </script>
   </head>
@@ -90,6 +136,11 @@
       <div class="country">
         <img src="" class="img" alt="">
         <p class="message"></div>
+        <div class="buttons">
+            <button class="button button1"></button>
+            <button class="button button2"></button>
+            <!--<button class="button button3"></button>-->
+        </div>
       </div>
   </body>
 </html>
